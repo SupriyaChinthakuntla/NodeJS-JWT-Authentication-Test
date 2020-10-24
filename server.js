@@ -88,11 +88,11 @@ app.get('/', (req, res) => {
 app.use(function (err, req, res, next) {
 
   if(err.name === 'UnauthorizedError') {
-    if(err.inner.name == 'TokenExpiredError') {
-        console.log(err.inner.name);
-        axios.get('http://localhost:3000');
-        return;
-      }
+    // if(err.inner.name == 'TokenExpiredError') {
+    //     console.log(err.inner.name);
+    //     axios.get('http://localhost:3000');
+    //     return;
+    //   }
       res.status(401).json({
               success: false,
               officialError: err,

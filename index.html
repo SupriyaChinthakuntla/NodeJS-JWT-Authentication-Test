@@ -51,6 +51,7 @@
         }
 
         function getDashboard() {
+            senseExpiry();
             const token = localStorage.getItem('jwt');
             axios.get('/api/dashboard', {
                 headers: {
@@ -65,6 +66,7 @@
         }
 
         function getSettings() {
+            senseExpiry();
             const token = localStorage.getItem('jwt');
             axios.get('/api/settings', {
                 headers: {
@@ -79,14 +81,43 @@
             });
         }
 
-        function onLoad() {
-            const token = localStorage.getItem('jwt');
-            if(token) {
-                getDashboard();
+        // function onLoad() {
+        //     const token = localStorage.getItem('jwt');
+        //     if(token) {
+        //         getDashboard();
+        //     }
+        // }
+        
+        function senseExpiry() {
+            const checkIfExpired = setInterval(
+                function () {
+                    checkExpiry();
+                }
+                , 180000);
+        }
+
+        function clearCache() {
+            window.location.reload();
+            // history.replaceState('http://localhost:3000', 'Login', '/');
+            localStorage.clear();        
+        }
+
+        function setExpiry() {
+            var expiryTime = Date.now() + 18000;
+            localStorage.setItem('expiryTime', expiryTime);
+        }
+
+        function checkExpiry() {
+            const expiration = localStorage.getItem('expiryTime');
+            const currentTime = Date.now();
+
+            if(currentTime > expiration) {
+                console.log('Token is expired');
+                clearCache();
+            } else {
+                console.log('Token is active');
             }
         }
-        
-       // onLoad();
 
     </script>
 </body>
