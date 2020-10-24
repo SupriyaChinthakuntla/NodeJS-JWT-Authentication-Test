@@ -45,6 +45,7 @@
                 if(res && res.data && res.data.success) {
                     const token = res.data.token;
                     localStorage.setItem('jwt', token);
+                    setExpiry();
                     getDashboard();
                 }
             });
@@ -98,7 +99,6 @@
 
         function clearCache() {
             window.location.reload();
-            // history.replaceState('http://localhost:3000', 'Login', '/');
             localStorage.clear();        
         }
 
